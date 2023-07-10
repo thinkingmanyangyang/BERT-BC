@@ -8,7 +8,7 @@ Different data sets can be handled by modifying the data_type parameter.
 - tokenize_post_train.py
 
 # post-pretrain
-Download initial checkpoint from https://github.com/hanjanghoon/BERT_FP
+Download initial checkpoint from https://huggingface.co/models
 ```
 python -u pretrain_final.py --model_class du_bert_pretrain --batch_size 32 --task e_commerce --is_training --epochs 15
 ```
