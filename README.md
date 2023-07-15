@@ -7,6 +7,12 @@ Different data sets can be handled by modifying the data_type parameter.
 - fine_turning_preprocess.py
 - tokenize_post_train.py
 
+# dataset 
+Ubuntu dataset: https://www.dropbox.com/s/2fdn26rj6h9bpvl/ubuntu_data.zip
+Douban dataset: https://www.dropbox.com/s/90t0qtji9ow20ca/DoubanConversaionCorpus.zip?dl=0
+E Commerce dataset: https://drive.google.com/file/d/154J-neBo20ABtSmJDvm7DK0eTuieAuvw/view
+preprocessed data: https://github.com/hanjanghoon/BERT_FP
+
 # post-pretrain
 Download initial checkpoint from https://huggingface.co/models
 ```
