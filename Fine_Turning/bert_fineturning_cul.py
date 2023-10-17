@@ -156,7 +156,7 @@ from models.custom_mask_model import CustomMaskModel
 # from models.du_bert_wti6 import DuBertWti as DuBertWti6
 # from models.du_bert_wti7 import DuBertWti as DuBertWti7
 # from models.du_bert_wti8 import DuBertWti as DuBertWti8
-
+from models.poly_encoder import PolyEncoder
 from models.du_bert_pretrain import DuBertPretrain
 from tqdm import tqdm
 from torch.utils.data import Dataset
@@ -182,6 +182,7 @@ FT_data = {
 MODEL_CLASSES = {
     'bert': (BertConfig, CustomMaskModel, VMTokenizer),
     'custom_mask_model': (BertConfig, CustomMaskModel, VMTokenizer),
+    "poly_encoder": (BertConfig, PolyEncoder, Tokenizer),
     # 'du_bert': (BertConfig, DuBert, Tokenizer), # du_bert_cross_entropy
     # 'du_bert2': (BertConfig, DuBert2, Tokenizer),
     # 'du_bert3': (BertConfig, DuBert3, Tokenizer),
@@ -396,6 +397,8 @@ class NeuralNetwork(nn.Module):
         self.bert_config.mix_type = args.mix_type
         self.bert_config.alpha = args.alpha
         self.bert_config.cl_layer = args.cl_layer
+        if self.args.model_class == "poly_encoder":
+            self.bert_config.cl_layer = 12
         # self.bert_tokenizer = BertTokenizer.from_pretrained(FT_model[args.task], do_lower_case=args.do_lower_case)
         self.bert_tokenizer = tokenizer_class(FT_model[args.task])
         self.collate_fn = Collate_fn(self.args, self.bert_tokenizer)
@@ -689,6 +692,8 @@ class NeuralNetwork(nn.Module):
                 data.pop('item_ids')
                 data = self.to_device(data)
                 labels = data['labels']
+                if self.args.model_class == "poly_encoder":
+                    data["labels"] = None
                 # selected_output = self.bert_model(**data, random_select=True)
                 output = self.bert_model(**data)
                 # print("selected output reward = {}, raw output reward = {}".format(selected_output[1].item(), output[1].item()))
